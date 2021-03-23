@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="model" default="$(find icerobot_description)/urdf/icerobot.urdf.xacro"/>
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+
+  <node name="ros_phoenix_control" 
+        pkg="ros_phoenix" 
+        type="ros_phoenix_control"/>
+  <rosparam command="load" file="$(find ros_phoenix)/launch/test_frame.yaml" />
+  <node pkg="ros_phoenix" type="ros_phoenix_node" name="ros_phoenix" respawn="false" />
+
+  <!-- Load controller configuration -->
+  <rosparam command="load" file="$(find icerobot_teleop)/config/control.yaml" />
+
+  <!-- Spawn controllers -->
+  <node name="base_controller_spawner" pkg="controller_manager" type="spawner"
+        args="icerobot_joint_publisher icerobot_velocity_controller"/>
+</launch>

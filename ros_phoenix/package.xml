@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package format="2">
+
+    <!-- basic data -->
+    <name>ros_phoenix</name>
+    <version>1.0.0</version>
+    <description>ROS Support for CTRE Phoenix Library</description>
+
+    <!-- maintainers -->
+    <maintainer email="vanderbiltrobotics@gmail.com">Vanderbilt Robotics</maintainer>
+
+    <!-- license information -->
+    <license>MIT</license>
+
+    <!-- urls -->
+    <url type="website">https://github.com/vanderbiltrobotics/</url>
+
+    <!-- dependencies -->
+    <buildtool_depend>catkin</buildtool_depend>
+    <depend>roscpp</depend>
+    <depend>geometry_msgs</depend>
+    <depend>dynamic_reconfigure</depend>
+    <depend>roslaunch</depend>
+
+    <!-- build messages -->
+    <build_depend>message_generation</build_depend>
+    <build_depend>controller_manager</build_depend>
+    <build_depend>hardware_interface</build_depend>
+    <build_depend>trajectory_msgs</build_depend>
+    <exec_depend>message_runtime</exec_depend>
+    <exec_depend>controller_manager</exec_depend>
+    <exec_depend>hardware_interface</exec_depend>
+    <exec_depend>effort_controllers</exec_depend>
+    <exec_depend>trajectory_msgs</exec_depend>
+    <!-- Very important for this kind of robot!! -->
+    <exec_depend>diff_drive_controller</exec_depend>
+
+</package>

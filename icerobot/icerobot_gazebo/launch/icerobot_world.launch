@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="model" default="$(find icerobot_description)/urdf/icerobot.urdf.xacro"/>  
+  <arg name="robot_namespace" default="/"/>
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" default="0.11"/>
+  <arg name="yaw" default="4.7124"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find husky_gazebo)/worlds/clearpath_playpen.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <include file="$(find icerobot_teleop)/launch/icerobot_teleop_key.launch">
+  </include>
+
+  <!-- Spawn robot in gazebo -->
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
+  <node name="icerobot_spawn" pkg="gazebo_ros" type="spawn_model"
+      args="-x $(arg x)
+            -y $(arg y)
+	    -z $(arg z)
+	    -Y $(arg yaw)
+            -unpause
+            -urdf
+            -param robot_description
+	    -model $(arg robot_namespace)"/>
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+</launch>
