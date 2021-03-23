@@ -16,9 +16,6 @@
     <arg name="debug" value="false"/>
   </include>
 
-  <include file="$(find icerobot_teleop)/launch/icerobot_teleop_key.launch">
-  </include>
-
   <!-- Spawn robot in gazebo -->
   <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
   <node name="icerobot_spawn" pkg="gazebo_ros" type="spawn_model"

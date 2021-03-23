@@ -1,3 +1,0 @@
-float64 shoulder_velocity
-float64 elbow_velocity
-float64 wrist_velocity
