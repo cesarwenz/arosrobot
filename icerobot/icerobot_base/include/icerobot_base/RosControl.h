@@ -34,10 +34,10 @@ public:
     
     // Falcon motor parameters
     icerobot_base::MotorControlPtr left(new icerobot_base::MotorControl);
-    left->mode = icerobot_base::MotorControl::PERCENT_OUTPUT;
+    left->mode = icerobot_base::MotorControl::VELOCITY;
     left->value = left_wheel_vel_msg.data;
     icerobot_base::MotorControlPtr right(new icerobot_base::MotorControl);
-    right->mode = icerobot_base::MotorControl::PERCENT_OUTPUT;
+    right->mode = icerobot_base::MotorControl::VELOCITY;
     right->value = right_wheel_vel_msg.data;
 
     // Publish results

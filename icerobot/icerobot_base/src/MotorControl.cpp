@@ -37,6 +37,8 @@ int main(int argc, char** argv)
                     config.D = (double)v["D"];
                 if (v.hasMember("F"))
                     config.F = (double)v["F"];
+                if (v.hasMember("Izone"))
+                    config.Izone = (double)v["Izone"];
 
                 auto node = ros::NodeHandle(nh, name);
                 talons.push_back(std::make_unique<TalonNode>(node, name, id, config));
@@ -51,7 +53,7 @@ int main(int argc, char** argv)
 
     ros::Rate loop_rate(50);
     while (ros::ok()) {
-        ctre::phoenix::unmanaged::FeedEnable(100);
+	ctre::phoenix::unmanaged::FeedEnable(100);
         std::for_each(talons.begin(), talons.end(), [](std::unique_ptr<TalonNode>& talon) { talon->update(); });
 
         ros::spinOnce();

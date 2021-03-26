@@ -20,7 +20,7 @@ TalonNode::TalonNode(const ros::NodeHandle& parent, const std::string& name, int
     , anglePub(nh.advertise<std_msgs::Float32>("angle", 1))
     , setSub(nh.subscribe("set", 1, &TalonNode::set, this))
     , lastUpdate(ros::Time::now()) // watchdog - turn off talon if we haven't gotten an update in a while
-    , _controlMode(ControlMode::PercentOutput)
+    , _controlMode(ControlMode::Velocity)
     , disabled(false)
     , configured(false)
     , not_configured_warned(false)
@@ -35,7 +35,7 @@ void TalonNode::set(MotorControl output)
 {
     boost::recursive_mutex::scoped_lock scoped_lock(mutex);
     this->_controlMode = (ControlMode) output.mode;
-    this->_output.data = output.value;
+    this->_output.data = output.value * 6909.89;
     this->lastUpdate = ros::Time::now();
 }
 
@@ -66,6 +66,7 @@ void TalonNode::configure()
     slot.kI = _config.I;
     slot.kD = _config.D;
     slot.kF = _config.F;
+    slot.integralZone = _config.Izone;
     c.slot0 = slot;
     c.voltageCompSaturation = _config.peak_voltage;
     SupplyCurrentLimitConfiguration(
@@ -117,7 +118,7 @@ void TalonNode::update()
         if (!this->disabled)
             ROS_WARN("Talon disabled for not receiving updates: %s", _name.c_str());
         this->disabled = true;
-        this->_controlMode = ControlMode::PercentOutput;
+        this->_controlMode = ControlMode::Velocity;
         this->_output.data = 0.0;
     } else {
         if (this->disabled)
@@ -141,13 +142,13 @@ void TalonNode::update()
     status.output_current = talon.GetOutputCurrent();
 
     status.position = talon.GetSelectedSensorPosition();
-    status.velocity = talon.GetSelectedSensorVelocity() * 10;
+    status.velocity = talon.GetSelectedSensorVelocity();
     
     status.fwd_limit = talon.GetSensorCollection().IsFwdLimitSwitchClosed();
     status.rev_limit = talon.GetSensorCollection().IsRevLimitSwitchClosed();
 
     std_msgs::Float32 angle;
-    angle.data = (status.position * (2*M_PI / 43008)); 
+    angle.data = (status.position * (2*M_PI / 143360)); 
 
     statusPub.publish(status);
     anglePub.publish(angle);

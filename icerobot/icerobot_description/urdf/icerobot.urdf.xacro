@@ -191,7 +191,7 @@
   <joint name="scan_joint" type="fixed">
     <parent link="base_link"/>
     <child link="base_scan"/>
-    <origin xyz="-0.375 0.008 1.322" rpy="${PI/2} 0 ${PI/2+PI}"/>
+    <origin xyz="-0.375 0.008 1.322" rpy="0 ${-PI/2} 0"/>
   </joint>
 
   <link name="base_scan">

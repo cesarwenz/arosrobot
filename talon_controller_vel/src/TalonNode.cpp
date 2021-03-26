@@ -34,7 +34,7 @@ void TalonNode::set(MotorControl output)
 {
     boost::recursive_mutex::scoped_lock scoped_lock(mutex);
     this->_controlMode = (ControlMode) output.mode;
-    this->_output = output.value * 2074.22;
+    this->_output = output.value * 2961.38;
     this->lastUpdate = ros::Time::now();
 }
 

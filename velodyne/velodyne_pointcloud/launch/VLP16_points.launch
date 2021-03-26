@@ -8,8 +8,8 @@
   <arg name="device_ip" default="192.168.0.201" />
   <arg name="frame_id" default="base_scan" />
   <arg name="manager" default="$(arg frame_id)_nodelet_manager" />
-  <arg name="max_range" default="300" />
-  <arg name="min_range" default="60" />
+  <arg name="max_range" default="130" />
+  <arg name="min_range" default="0.4" />
   <arg name="pcap" default="" />
   <arg name="port" default="2368" />
   <arg name="read_fast" default="false" />
@@ -45,8 +45,8 @@
     <arg name="model" value="VLP16"/>
     <arg name="calibration" value="$(arg calibration)"/>
     <arg name="manager" value="$(arg manager)" />
-    <arg name="fixed_frame" value="base_scan" />
-    <arg name="target_frame" value="base_link" />
+    <arg name="fixed_frame" value="" />
+    <arg name="target_frame" value="" />
     <arg name="max_range" value="$(arg max_range)"/>
     <arg name="min_range" value="$(arg min_range)"/>
     <arg name="organize_cloud" value="$(arg organize_cloud)"/>
