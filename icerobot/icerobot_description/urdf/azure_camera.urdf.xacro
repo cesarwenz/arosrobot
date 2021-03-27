@@ -1,6 +1,100 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:macro name="rgbd_cameras" params="topic_azure topic_kinect parent_link">
+    <!-- Azure camera joints -->
+    <joint name="azure_camera_base_joint" type="fixed">
+      <origin xyz="-0.10 0.007 1.345" rpy="0 0 -${PI/2}"/>
+      <parent link="${parent_link}"/>
+      <child link="azure_camera_body"/>
+    </joint>
+    
+    <link name="azure_camera_body">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+         <mesh filename="package://icerobot_description/meshes/camera.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.012 0.132 0.020"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.44" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.000881243" ixy="0.0" ixz="0.0"
+                 iyy="0.000498940" iyz="0.0"
+                 izz="0.000879257" />
+      </inertial>
+    </link>
+  
+    <joint name="azure_camera_visor_joint" type="fixed">
+      <origin xyz="0.1 0 0" rpy="0 0 0"/>
+      <parent link="azure_camera_body"/>
+      <child link="azure_camera_visor"/>
+    </joint>
+
+    <link name="azure_camera_visor"/>
+
+    <joint name="azure_rgb_camera_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="azure_camera_visor"/>
+      <child link="azure_rgb_camera_link"/>
+    </joint>
+
+    <link name="azure_rgb_camera_link"/>
+
+    <joint name="azure_imu_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 ${PI/2}"/>
+      <parent link="azure_camera_body"/>
+      <child link="azure_imu_link"/>
+    </joint>
+
+    <link name="azure_imu_link"/>
+  
+    <joint name="azure_lens_gazebo_joint" type="fixed">
+	    <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="azure_camera_visor"/>
+      <child link="azure_camera"/>
+    </joint>
+    
+    <!-- Kinect camera joints -->
+    <joint name="kinect_camera_joint" type="fixed">
+      <origin xyz="0.3 0.007 0.65" rpy="0 0 0"/>
+      <parent link="${parent_link}"/>
+      <child link="kinect_camera_link"/>
+    </joint>
+  
+    <link name="kinect_camera_link">
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.012 0.132 0.020"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.44" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.000881243" ixy="0.0" ixz="0.0"
+                 iyy="0.000498940" iyz="0.0"
+                 izz="0.000879257" />
+      </inertial>
+    </link>
+  
+    <joint name="kinect_lens_joint" type="fixed">
+      <origin xyz="0.1 0 0" rpy="0 0 0"/>
+      <parent link="kinect_camera_link"/>
+      <child link="kinect_lens_frame"/>
+    </joint>
+    <link name="kinect_lens_frame"/>
+  
+    <joint name="kinect_lens_gazebo_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="kinect_lens_frame"/>
+      <child link="kinect_camera"/>
+    </joint>
     <xacro:macro name="depth_cam_init" params="
                frame:=cam_name           topic:=cam_topic
                h_fov:=1.3090             v_fov:=1.1345
@@ -61,84 +155,7 @@
       </gazebo>
     </xacro:macro>
 
-    <!-- Azure camera joints -->
-    <joint name="azure_camera_joint" type="fixed">
-      <origin xyz="-0.10 0.007 1.345" rpy="0 0 -${PI/2}"/>
-      <parent link="${parent_link}"/>
-      <child link="azure_camera_link"/>
-    </joint>
-  
-    <link name="azure_camera_link">
-      <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-         <mesh filename="package://icerobot_description/meshes/camera.dae" />
-        </geometry>
-      </visual>
-      <collision>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <box size="0.012 0.132 0.020"/>
-        </geometry>
-      </collision>
-      <inertial>
-        <mass value="0.44" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="0.000881243" ixy="0.0" ixz="0.0"
-                 iyy="0.000498940" iyz="0.0"
-                 izz="0.000879257" />
-      </inertial>
-    </link>
-  
-    <joint name="azure_lens_joint" type="fixed">
-      <origin xyz="0.1 0 0" rpy="0 0 0"/>
-      <parent link="azure_camera_link"/>
-      <child link="azure_lens_frame"/>
-    </joint>
-    <link name="azure_lens_frame"/>
-  
-    <joint name="azure_lens_gazebo_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <parent link="azure_lens_frame"/>
-      <child link="azure_camera"/>
-    </joint>
     <xacro:depth_cam_init frame="azure_camera" topic="${topic_azure}"/>
-    
-    <!-- Kinect camera joints -->
-    <joint name="kinect_camera_joint" type="fixed">
-      <origin xyz="0.3 0.007 0.65" rpy="0 0 0"/>
-      <parent link="${parent_link}"/>
-      <child link="kinect_camera_link"/>
-    </joint>
-  
-    <link name="kinect_camera_link">
-      <collision>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <box size="0.012 0.132 0.020"/>
-        </geometry>
-      </collision>
-      <inertial>
-        <mass value="0.44" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="0.000881243" ixy="0.0" ixz="0.0"
-                 iyy="0.000498940" iyz="0.0"
-                 izz="0.000879257" />
-      </inertial>
-    </link>
-  
-    <joint name="kinect_lens_joint" type="fixed">
-      <origin xyz="0.1 0 0" rpy="0 0 0"/>
-      <parent link="kinect_camera_link"/>
-      <child link="kinect_lens_frame"/>
-    </joint>
-    <link name="kinect_lens_frame"/>
-  
-    <joint name="kinect_lens_gazebo_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <parent link="kinect_lens_frame"/>
-      <child link="kinect_camera"/>
-    </joint>
     <xacro:depth_cam_init frame="kinect_camera" topic="${topic_kinect}"
                           h_fov="0.9948"         v_fov="0.7505"
                           min_range="1.2"        max_range="3.5"

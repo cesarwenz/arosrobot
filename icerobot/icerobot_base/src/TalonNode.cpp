@@ -24,6 +24,7 @@ TalonNode::TalonNode(const ros::NodeHandle& parent, const std::string& name, int
     , disabled(false)
     , configured(false)
     , not_configured_warned(false)
+    , reset_odom_(nh.advertiseService("reset_odom", &TalonNode::resetOdom, this)) 
 {
     boost::recursive_mutex::scoped_lock scoped_lock(mutex);
     server.updateConfig(_config);
@@ -168,6 +169,17 @@ void TalonNode::configureStatusPeriod()
     talon.SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0, 20);
     talon.SetStatusFramePeriod(StatusFrameEnhanced::Status_14_Turn_PIDF1, 20);
     talon.SetStatusFramePeriod(StatusFrameEnhanced::Status_15_FirmareApiStatus, 100);
+}
+
+bool TalonNode::resetOdom(icerobot_base::Reset::Request &req,
+                    icerobot_base::Reset::Response &res)
+{
+    boost::recursive_mutex::scoped_lock scoped_lock(mutex);
+    if (req.reset_odom) {
+      talon.GetSensorCollection().SetIntegratedSensorPosition(0);
+    }
+    printf("Odometer has been reset\n");
+    return true;
 }
 
 } // namespace icerobot_base

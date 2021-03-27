@@ -55,7 +55,6 @@ int main(int argc, char** argv)
     while (ros::ok()) {
 	ctre::phoenix::unmanaged::FeedEnable(100);
         std::for_each(talons.begin(), talons.end(), [](std::unique_ptr<TalonNode>& talon) { talon->update(); });
-
         ros::spinOnce();
         loop_rate.sleep();
     }

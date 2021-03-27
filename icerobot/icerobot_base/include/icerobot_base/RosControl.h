@@ -12,7 +12,10 @@
 #include <hardware_interface/robot_hw.h>
 // ostringstream
 #include <sstream>
+
+#include "icerobot_base/TalonNode.h"
 #include "icerobot_base/MotorControl.h"
+#include "icerobot_base/Reset.h"
 
 const unsigned int NUM_JOINTS = 4;
 

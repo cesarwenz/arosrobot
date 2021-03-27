@@ -10,6 +10,7 @@
 #include "icerobot_base/MotorControl.h"
 #include "icerobot_base/MotorAngle.h"
 #include "icerobot_base/MotorStatus.h"
+#include "icerobot_base/Reset.h"
 
 #include <string>
 #include <dynamic_reconfigure/server.h>
@@ -39,6 +40,7 @@ private:
     bool disabled;
     bool configured;
     bool not_configured_warned;
+    ros::ServiceServer reset_odom_;
 
 public:
     TalonNode(const ros::NodeHandle& parent, const std::string& name, int id, const TalonConfig& config);
@@ -56,6 +58,9 @@ public:
     void update();
 
     void configureStatusPeriod();
+
+    bool resetOdom(icerobot_base::Reset::Request &req, 
+		    icerobot_base::Reset::Response &res);
 };
 
 } // namespace icerobot_base
