@@ -1,5 +1,0 @@
-<launch>
-    <rosparam command="load" file="$(find talon_controller_vel)/launch/test_frame.yaml" />
-    <node pkg="talon_controller_vel" type="talon_controller_vel_node" name="talon_controller_vel" respawn="false" />
-    <node pkg="talon_controller_vel" type="talon_controller_vel_cmd_example" name="cmd_exmaple" respawn="false" />
-</launch>

@@ -1,16 +1,9 @@
 <?xml version="1.0"?>
 <launch>
   <!-- Start EKF for localization-->
-  <rosparam command="load" file="$(find icerobot_control)/config/navsat_localization.yaml" />
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom" clear_params="true"/>
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true">
-    <remap from="odometry/filtered" to="odometry/filtered_map"/>
-  </node>
-  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" clear_params="true">
-    <remap from="odometry/filtered" to="odometry/filtered_map"/>
-    <remap from="fix" to="navsat/fix"/>
-    <remap from="imu/data" to="imu/data"/>
-  
+  <include file="$(find icerobot_control)/launch/icerobot_navsat_localization.launch">
+  </include>
+
   <!-- IMU sensor -->
   <node pkg="um7" name="um7_node" type="um7_driver">
     <param name="_port" value="/dev/ttyUSB0"/>
@@ -24,5 +17,8 @@
   
   <!-- Velodyne LiDAR -->
   <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
+  </include>
+
+  <include file="$(find azure_kinect_ros_driver)/launch/azure.launch">
   </include>
 </launch>
