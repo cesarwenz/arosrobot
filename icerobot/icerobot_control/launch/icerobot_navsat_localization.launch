@@ -18,7 +18,6 @@
     <remap from="odometry/filtered" to="odometry/filtered_map"/>
     <remap from="/fix" to="navsat/fix"/>
     <remap from="imu/data" to="imu/data/um7"/>1
-    <remap from="imu" to="imu/data/azure"/>1
   </node>
 
 </launch>
