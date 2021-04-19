@@ -11,12 +11,11 @@
     </joint>
     <gazebo reference="um7_imu_link">
     </gazebo>
-
     <gazebo>
       <plugin name="um_7_imu_controller" filename="libhector_gazebo_ros_imu.so">
         <robotNamespace>$(arg robot_namespace)</robotNamespace>
         <updateRate>20.0</updateRate>
-        <bodyName>um7_imu_link</bodyName>
+        <bodyName>${parent_link}</bodyName>
         <topicName>${topic_imu_um7}</topicName>
         <xyzOffset>0 0 0</xyzOffset>
         <rpyOffset>0 0 0</rpyOffset>
@@ -36,6 +35,7 @@
       <parent link="${parent_link}" />
       <child link="azure_imu_link" />
     </joint>
+    
     <gazebo reference="azure_imu_link">
     </gazebo>
 
@@ -43,7 +43,7 @@
       <plugin name="azure_imu_controller" filename="libhector_gazebo_ros_imu.so">
         <robotNamespace>$(arg robot_namespace)</robotNamespace>
         <updateRate>20.0</updateRate>
-        <bodyName>azure_imu_link</bodyName>
+	<bodyName>${parent_link}</bodyName>
         <topicName>${topic_imu_azure}</topicName>
         <xyzOffset>0 0 0</xyzOffset>
         <rpyOffset>0 0 0</rpyOffset>

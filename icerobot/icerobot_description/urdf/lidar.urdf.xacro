@@ -24,7 +24,7 @@
       </inertial>
     </link>
 
-    <gazebo reference="vlp16_base_scan">
+    <gazebo reference="vlp16_scan">
       <sensor type="ray" name="velodyne_VLP16">
         <pose>2 0 0 0 0 0</pose>
         <visualize>false</visualize>
@@ -57,8 +57,8 @@
         </ray>
         <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_laser.so">
           <robotNamespace>$(arg robot_namespace)</robotNamespace>
-          <topicName>${topic_lidar_vlp16}</topicName>
-          <frameName>vlp16_base_scan</frameName>
+	  <topicName>${topic_lidar_vlp16}</topicName>
+          <frameName>vlp16_scan</frameName>
           <min_range>0.9</min_range>
           <max_range>130</max_range>
           <gaussianNoise>0.008</gaussianNoise>
@@ -70,12 +70,12 @@
     <joint name="rplidar_scan_joint" type="fixed">
       <parent link="${parent_link}"/>
       <child link="rplidar_scan"/>
-      <origin xyz="0.3 0.007 0.6" rpy="0 0 0"/>
+      <origin xyz="0.3 0.007 0.615" rpy="0 0 0"/>
     </joint>
 
     <link name="rplidar_scan">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 -0.025" rpy="0 0 0"/>
         <geometry>
           <mesh filename="package://icerobot_description/meshes/rplidar.dae"/>
         </geometry>
@@ -90,8 +90,8 @@
     </link>
 
   <!-- RpLidar A3 using GPU -->
-    <gazebo reference="rplidar_base_scan">
-      <sensor type="gpu_ray" name="head_rplidar_sensor">
+    <gazebo reference="rplidar_scan">
+      <sensor type="ray" name="head_rplidar_sensor">
         <pose>0 0 0.06 0 0 0</pose>
         <visualize>false</visualize>
         <update_rate>40</update_rate>
@@ -115,9 +115,9 @@
             <stddev>0.01</stddev>
           </noise>
         </ray>
-        <plugin name="gazebo_ros_head_rplidar_controller" filename="libgazebo_ros_gpu_laser.so">
+        <plugin name="gazebo_ros_head_rplidar_controller" filename="libgazebo_ros_laser.so">
           <topicName>${topic_lidar_rplidar}</topicName>
-          <frameName>rplidar_base_scan</frameName>
+          <frameName>rplidar_scan</frameName>
         </plugin>
       </sensor>
     </gazebo> 

@@ -8,11 +8,11 @@
   <!-- Base Size -->
   <xacro:property name="base_x_size" value="0.96520000" />
   <xacro:property name="base_y_size" value="0.63500000" />
-  <xacro:property name="base_z_size" value="0.6154100" />
+  <xacro:property name="base_z_size" value="0.5754100" />
 
   <!-- Platform Size -->
-  <xacro:property name="platform_x_size" value="0.320000" />
-  <xacro:property name="platform_y_size" value="0.63500000" />
+  <xacro:property name="platform_x_size" value="0.100000" />
+  <xacro:property name="platform_y_size" value="0.100000" />
   <xacro:property name="platform_z_size" value="1.4000000" />
   
   <!-- Wheel Mounting Positions -->
@@ -102,7 +102,7 @@
       <geometry>
         <box size="${platform_x_size} ${platform_y_size} ${platform_z_size}"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0.1 0 ${(platform_z_size/2)}"/>
+      <origin rpy="0 0 0" xyz="0.18 0 ${(platform_z_size/2)}"/>
     </collision>
     <inertial>
       <mass value="${mass_platform}" />

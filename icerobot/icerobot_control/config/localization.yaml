@@ -19,7 +19,7 @@ odom0_nodelay: true
 odom0_queue_size: 10
 odom0_relative: false
 
-imu0: imu/data
+imu0: um7/imu/data
 imu0_config: [false, false, false,
               true,  true,  true,
               false, false, false,
@@ -31,3 +31,14 @@ imu0_nodelay: false
 imu0_queue_size: 10
 imu0_remove_gravitational_acceleration: true
 
+imu0: azure/imu/data
+imu0_config: [false, false, false,
+              true,  true,  true,
+              false, false, false,
+              true,  true,  true,
+              false, false, false]
+imu0_differential: true
+imu0_relative: false
+imu0_nodelay: false
+imu0_queue_size: 10
+imu0_remove_gravitational_acceleration: true

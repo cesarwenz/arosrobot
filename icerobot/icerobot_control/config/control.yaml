@@ -13,7 +13,7 @@ icerobot_velocity_controller:
   velocity_rolling_window_size: 2
 
   # Base frame_id
-  base_frame_id: base_footprint
+  base_frame_id: base_link 
 
   enable_odom_tf: true
   odom_frame_id: odom
