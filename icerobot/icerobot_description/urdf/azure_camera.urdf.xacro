@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:macro name="rgbd_cameras" params="topic_azure topic_kinect parent_link">
+<!-- add topic_kinect to param for kinect camera -->
+  <xacro:macro name="rgbd_cameras" params="topic_azure parent_link">
     <!-- Azure camera joints -->
     <joint name="azure_camera_base_joint" type="fixed">
       <origin xyz="-0.10 0.007 1.345" rpy="0 0 ${-PI/2}"/>
@@ -10,7 +11,7 @@
     
     <link name="azure_camera_body">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 ${PI}"/>
         <geometry>
          <mesh filename="package://icerobot_description/meshes/camera.dae" />
         </geometry>
@@ -31,13 +32,14 @@
     </link>
   
     <joint name="azure_camera_visor_joint" type="fixed">
-      <origin xyz="0.1 0 0" rpy="${-PI/2-0.2} 0 ${-PI/2}"/>
+      <origin xyz="0.07 0 0.025" rpy="${-PI/2-0.1} 0 ${-PI/2}"/>
       <parent link="azure_camera_body"/>
       <child link="azure_camera_visor"/>
     </joint>
 
     <link name="azure_camera_visor"/>
 
+<!--
     <joint name="azure_imu_joint" type="fixed">
       <origin xyz="0 0 0" rpy="0 0 ${PI/2}"/>
       <parent link="azure_camera_body"/>
@@ -45,14 +47,14 @@
     </joint>
 
     <link name="azure_imu_link"/>
-  
+ -->
     <joint name="azure_lens_gazebo_joint" type="fixed">
 	    <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="azure_camera_visor"/>
       <child link="azure_camera"/>
     </joint>
     
-    <!-- Kinect camera joints -->
+    <!-- Kinect camera joints 
     <joint name="kinect_camera_joint" type="fixed">
       <origin xyz="0.3 0.007 0.65" rpy="0 0 0"/>
       <parent link="${parent_link}"/>
@@ -87,6 +89,8 @@
       <parent link="kinect_lens_frame"/>
       <child link="kinect_camera"/>
     </joint>
+    -->
+
     <xacro:macro name="depth_cam_init" params="
                frame:=cam_name           topic:=cam_topic
                h_fov:=1.3090             v_fov:=1.1345
@@ -115,7 +119,6 @@
             </image>
             <clip>
               <near>0.01</near>
-              <!-- Max distance -->
               <far>50.0</far>
             </clip>
           </camera>
@@ -146,14 +149,13 @@
         </sensor>
       </gazebo>
     </xacro:macro>
-
     <xacro:depth_cam_init frame="azure_camera" topic="${topic_azure}"/>
-    <xacro:depth_cam_init frame="kinect_camera" topic="${topic_kinect}"
+    <!--<xacro:depth_cam_init frame="kinect_camera" topic="${topic_kinect}"
                           h_fov="0.9948"         v_fov="0.7505"
                           min_range="1.2"        max_range="3.5"
                           width="640"            height="480"
                           update_rate="30"/>
-
+    -->
   </xacro:macro>
 </robot>
 
