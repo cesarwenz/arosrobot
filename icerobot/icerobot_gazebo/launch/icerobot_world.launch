@@ -4,8 +4,8 @@
   <arg name="robot_namespace" default="/"/>
   <arg name="x" default="0.0"/>
   <arg name="y" default="0.0"/>
-  <arg name="z" default="0.11"/>
-  <arg name="yaw" default="4.7124"/>
+  <arg name="z" default="0.0"/>
+  <arg name="yaw" default="0.0"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find husky_gazebo)/worlds/clearpath_playpen.world"/>
