@@ -7,6 +7,7 @@
   <!-- IMU sensor -->
   <node pkg="um7" name="um7_node" type="um7_driver">
     <param name="_port" value="/dev/ttyUSB0"/>
+    <remap from="imu" to="um7/imu"/>
   </node>
 
   <!-- GPS -->
