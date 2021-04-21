@@ -1,0 +1,7 @@
+
+download libk4a1.4/-dev for arch64 architecture
+download k4a-tools
+enable virtual display for azure camera
+register ip address in /etc/hosts/
+setup ssh ip address in ~/.ssh/config
+
