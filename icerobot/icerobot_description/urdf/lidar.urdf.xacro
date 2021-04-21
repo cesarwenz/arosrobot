@@ -70,7 +70,7 @@
     <joint name="rplidar_scan_joint" type="fixed">
       <parent link="${parent_link}"/>
       <child link="rplidar_scan"/>
-      <origin xyz="0.3 0.007 0.615" rpy="0 0 0"/>
+      <origin xyz="0.29 0.075 0.615" rpy="0 0 ${PI}"/>
     </joint>
 
     <link name="rplidar_scan">
