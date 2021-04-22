@@ -1,25 +1,37 @@
 <?xml version="1.0"?>
 <launch>
   <!-- Start EKF for localization-->
-  <include file="$(find icerobot_control)/launch/icerobot_navsat_localization.launch">
+  <include file="$(find icerobot_control)/launch/icerobot_localization.launch">
   </include>
 
   <!-- IMU sensor -->
   <node pkg="um7" name="um7_node" type="um7_driver">
-    <param name="_port" value="/dev/ttyUSB0"/>
+    <param name="port" value="/dev/ttyUSB0"/>
+    <param name="frame_id" value="um7_imu_link"/>
     <remap from="imu" to="um7/imu"/>
+
   </node>
 
-  <!-- GPS -->
+  <!-- GPS 
   <node pkg="nmea_navsat_driver" name="nmea_to_navsat" type="nmea_serial_driver">
     <param name="_port" value="/dev/ttyUSB2"/>
     <param name="_baud" value="115200"/>
   </node>
-  
-  <!-- Velodyne LiDAR -->
+  -->
+  <!-- Velodyne LiDAR 
   <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
   </include>
-
-  <include file="$(find azure_kinect_ros_driver)/launch/azure.launch">
+-->
+  <include file="$(find azure_kinect_ros_driver)/launch/driver.launch">
   </include>
+  
+  <!-- RPLidar -->
+  <include file="$(find rplidar_ros)/launch/rplidar_s1.launch">
+  </include>
+
+  <!-- gmapping -->
+  <include file="$(find icerobot_gmapping)/launch/gmapping.launch">
+  </include>
+
 </launch>
+

@@ -1,6 +1,8 @@
 <launch>
   <!-- IMU sensor -->
   <node pkg="um7" name="um7_node" type="um7_driver">
-    <param name="_port" value="/dev/ttyUSB0"/>
+    <param name="port" value="/dev/ttyUSB0"/>
+    <param name="frame_id" value="um7_imu_link"/>
+    <remap from="imu" to="um7/imu"/>
   </node>
 </launch>
