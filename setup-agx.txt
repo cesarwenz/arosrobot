@@ -1,7 +1,22 @@
-
 download libk4a1.4/-dev for arch64 architecture
 download k4a-tools
+
+downaload CAN tools
+https://medium.com/@ramin.nabati/enabling-can-on-nvidia-jetson-xavier-developer-kit-aaaa3c4d99c9
+enable jetson CAN 
+use reset script in CAN is not working
+
 enable virtual display for azure camera
-register ip address in /etc/hosts/
-setup ssh ip address in ~/.ssh/config
+https://forums.developer.nvidia.com/t/jetson-nano-headless-rendering/78660/5
+use script to enable virtual display
+
+# Change ROS_MASTER
+/etc/systemd/system/roscore.service
+/etc/ros/env.sh
+
+# Add ip address
+~/.bashrc
+~/.ssh/config
+/etc/ssh/sshd_config
+/etc/hosts
 

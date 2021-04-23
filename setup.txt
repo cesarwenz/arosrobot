@@ -1,9 +1,0 @@
-# Change ROS_MASTER
-/etc/systemd/system/roscore.service
-/etc/ros/env.sh
-
-# Add ip address
-~/.bashrc
-~/.ssh/config
-/etc/ssh/sshd_config
-
