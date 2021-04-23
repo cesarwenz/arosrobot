@@ -8,13 +8,13 @@
 
       map_update_interval: 0.5 # Publish new map
 
-      maxUrange: 5.5 # Should be just less than sensor range
-      maxRange: 6.1 # Should be just greater than sensor range
+      maxUrange: 20 # Should be just less than sensor range
+      maxRange: 40 # Should be just greater than sensor range
       particles: 100 # Increased from 80
 
       # Update frequencies
       linearUpdate: 0.3
-      angularUpdate: 0.5
+      angularUpdate: 0.3
       temporalUpdate: 2.0
       resampleThreshold: 0.5
 
