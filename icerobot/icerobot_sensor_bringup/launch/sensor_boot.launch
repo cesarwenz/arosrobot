@@ -5,13 +5,8 @@
   </include>
 
   <!-- IMU sensor -->
-  <node pkg="um7" name="um7_node" type="um7_driver">
-    <param name="port" value="/dev/ttyUSB0"/>
-    <param name="frame_id" value="um7_imu_link"/>
-    <remap from="imu" to="um7/imu"/>
-
-  </node>
-
+  <include file="$(find um7_imu)/launch/um7.launch">
+  </include>
   <!-- GPS 
   <node pkg="nmea_navsat_driver" name="nmea_to_navsat" type="nmea_serial_driver">
     <param name="_port" value="/dev/ttyUSB2"/>
@@ -24,13 +19,14 @@
 -->
   <include file="$(find azure_kinect_ros_driver)/launch/driver.launch">
   </include>
+
   
   <!-- RPLidar -->
   <include file="$(find rplidar_ros)/launch/rplidar_s1.launch">
   </include>
 
   <!-- gmapping -->
-  <include file="$(find icerobot_gmapping)/launch/gmapping.launch">
+  <include file="$(find icerobot_navigation)/launch/slam_cost.launch">
   </include>
 
 </launch>
