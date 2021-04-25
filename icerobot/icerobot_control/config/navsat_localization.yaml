@@ -37,7 +37,7 @@ ekf_se_odom:
   imu0_remove_gravitational_acceleration: true
 
 ekf_se_map:
-  frequency: 5 
+  frequency: 1 
   transform_time_offset: 0.0
   sensor_timeout: 0.1
   two_d_mode: true
@@ -88,9 +88,9 @@ ekf_se_map:
 navsat_transform:
   frequency: 5
   delay: 0 
-  magnetic_declination_radians: 0.16667894  # For lat/long 42.86N, 80.27W
+  magnetic_declination_radians: 0.169646  # For lat/long 42.86N, 80.27W
   yaw_offset: 0.0  # should report 0 when facing east
-  zero_altitude: false
+  zero_altitude: true
   broadcast_utm_transform: true
   publish_filtered_gps: true
   use_odometry_yaw: false

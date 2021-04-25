@@ -20,3 +20,8 @@ use script to enable virtual display
 /etc/ssh/sshd_config
 /etc/hosts
 
+# USB Connections
+-check dmesg | grep tty
+-FTDI is IMU
+-PL2303 is GPS
+-CP210x is LiDAR
