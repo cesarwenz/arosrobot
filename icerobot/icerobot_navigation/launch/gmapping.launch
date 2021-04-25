@@ -9,7 +9,7 @@
       map_update_interval: 0.5 # Publish new map
 
       maxUrange: 20 # Should be just less than sensor range
-      maxRange: 40 # Should be just greater than sensor range
+      maxRange: 20 # Should be just greater than sensor range
       particles: 100 # Increased from 80
 
       # Update frequencies
