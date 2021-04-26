@@ -8,7 +8,7 @@
   <arg name="device_ip" default="192.168.0.201" />
   <arg name="frame_id" default="vlp16_scan" />
   <arg name="manager" default="$(arg frame_id)_nodelet_manager" />
-  <arg name="max_range" default="130" />
+  <arg name="max_range" default="30" />
   <arg name="min_range" default="0.4" />
   <arg name="pcap" default="" />
   <arg name="port" default="2368" />
@@ -52,11 +52,12 @@
     <arg name="organize_cloud" value="$(arg organize_cloud)"/>
   </include>
 
-  <!-- start laserscan nodelet -->
+  <!-- start laserscan nodelet 
   <include file="$(find velodyne_pointcloud)/launch/laserscan_nodelet.launch">
     <arg name="manager" value="$(arg manager)" />
     <arg name="ring" value="$(arg laserscan_ring)"/>
     <arg name="resolution" value="$(arg laserscan_resolution)"/>
   </include>
+-->
 
 </launch>

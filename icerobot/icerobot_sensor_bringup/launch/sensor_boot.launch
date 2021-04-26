@@ -16,14 +16,15 @@
   <include file="$(find azure_kinect_ros_driver)/launch/driver.launch">
   </include>
 
-  
-  <!-- RPLidar -->
+ 
+  <!-- RPLidar 
+-->
   <include file="$(find rplidar_ros)/launch/rplidar_s1.launch">
   </include>
-
-  <!-- gmapping -->
+  <!-- gmapping 
   <include file="$(find icerobot_navigation)/launch/slam_cost.launch">
   </include>
+-->
 
 </launch>
 
