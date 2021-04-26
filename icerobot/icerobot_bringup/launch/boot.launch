@@ -4,8 +4,7 @@
   <include file="$(find icerobot_base)/launch/hw_control.launch">
   </include>
   
-  <include file="$(find icerobot_joy)/launch/teleop.launch">
-  </include>
+  
 <!--
   <include file="$(find icerobot_key)/launch/icerobot_teleop_key.launch">
   </include>
