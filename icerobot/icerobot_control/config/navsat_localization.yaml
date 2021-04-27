@@ -37,7 +37,7 @@ ekf_se_odom:
   imu0_remove_gravitational_acceleration: true
 
 ekf_se_map:
-  frequency: 1 
+  frequency: 10 
   transform_time_offset: 0.0
   sensor_timeout: 0.1
   two_d_mode: true
