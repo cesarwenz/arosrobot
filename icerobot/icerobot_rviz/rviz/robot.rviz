@@ -7,7 +7,6 @@ Panels:
         - /Global Options1
         - /Status1
         - /Sensing1
-        - /Sensing1/GPS Odom1
         - /Sensing1/Local Odom1/Shape1
         - /Sensing1/Global Odom1/Shape1
         - /Navigation1/Exploration1
@@ -32,7 +31,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: Camera
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -227,7 +226,7 @@ Visualization Manager:
               Scale: 1
               Value: true
             Value: false
-          Enabled: true
+          Enabled: false
           Keep: 100
           Name: GPS Odom
           Position Tolerance: 0.10000000149011612
@@ -243,7 +242,7 @@ Visualization Manager:
             Value: Arrow
           Topic: /odometry/gps
           Unreliable: false
-          Value: true
+          Value: false
         - Angle Tolerance: 0.10000000149011612
           Class: rviz/Odometry
           Covariance:
@@ -324,10 +323,10 @@ Visualization Manager:
           Color: 255; 255; 255
           Color Transformer: Intensity
           Decay Time: 0
-          Enabled: false
+          Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 135
+          Max Intensity: 255
           Min Color: 0; 0; 0
           Min Intensity: 0
           Name: PointCloud2
@@ -341,7 +340,7 @@ Visualization Manager:
           Unreliable: false
           Use Fixed Frame: true
           Use rainbow: true
-          Value: false
+          Value: true
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
@@ -375,9 +374,9 @@ Visualization Manager:
         - Class: rviz/Camera
           Enabled: true
           Image Rendering: background and overlay
-          Image Topic: ""
+          Image Topic: /rgb/image_raw
           Name: Camera
-          Overlay Alpha: 0.5
+          Overlay Alpha: 1
           Queue Size: 2
           Transport Hint: raw
           Unreliable: false
@@ -573,25 +572,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 14.07884407043457
+      Distance: 17.3316593170166
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -1.8290165662765503
-        Y: 1.6965999603271484
-        Z: 1.0730600357055664
+        X: -0.1008351594209671
+        Y: -0.31023895740509033
+        Z: 2.6374752521514893
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.6097968816757202
+      Pitch: 0.6597974896430969
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.277228593826294
+      Yaw: 3.059056520462036
     Saved: ~
 Window Geometry:
   Camera:
@@ -611,5 +610,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1368
-  X: 0
+  X: 134
   Y: 55
