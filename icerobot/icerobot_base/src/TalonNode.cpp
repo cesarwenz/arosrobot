@@ -16,7 +16,7 @@ TalonNode::TalonNode(const ros::NodeHandle& parent, const std::string& name, int
     , server(mutex, nh)
     , _config(config)
     , talon(id)
-    , statusPub(nh.advertise<MotorStatus>("status", 1))
+    , statusPub(nh.advertise<MotorStatus>("status", 0.5))
     , anglePub(nh.advertise<std_msgs::Float32>("angle", 1))
     , setSub(nh.subscribe("set", 1, &TalonNode::set, this))
     , lastUpdate(ros::Time::now()) // watchdog - turn off talon if we haven't gotten an update in a while
@@ -149,7 +149,7 @@ void TalonNode::update()
     status.rev_limit = talon.GetSensorCollection().IsRevLimitSwitchClosed();
 
     std_msgs::Float32 angle;
-    angle.data = (status.position * (2*M_PI / 143360)); 
+    angle.data = ( status.position * (2*M_PI / 143360)); 
 
     statusPub.publish(status);
     anglePub.publish(angle);
