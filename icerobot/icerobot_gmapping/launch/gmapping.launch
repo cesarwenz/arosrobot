@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <launch>
+<<<<<<< HEAD
   <node type="laser_scan_assembler" pkg="laser_assembler" name="my_assembler">
     <remap from="scan" to="scan_filtered"/>
     <param name="max_scans" type="int" value="400" />
@@ -8,6 +9,19 @@
 <!--
   <node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
     <param name="resolution" value="0.1" />
+=======
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
+    <rosparam>
+      odom_frame: odom
+      base_frame: base_link
+      map_frame: map_gmap
+
+      map_update_interval: 0.5 # Publish new map
+
+      maxUrange: 20 # Should be just less than sensor range
+      maxRange: 40 # Should be just greater than sensor range
+      particles: 100 # Increased from 80
+>>>>>>> 255213fac35d2c8fb2da8d0e432a15b50829a552
 
     <param name="frame_id" type="string" value="map" />
 
