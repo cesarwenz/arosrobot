@@ -1,0 +1,17 @@
+<launch>
+  <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+  <param name="serial_port"         type="string" value="/dev/ttyUSBLIDAR"/>  
+  <param name="serial_baudrate"     type="int"    value="256000"/>
+  <param name="frame_id"            type="string" value="rplidar_scan"/>
+  <param name="inverted"            type="bool"   value="false"/>
+  <param name="angle_compensate"    type="bool"   value="true"/>
+<!--  
+<remap from="scan" to="rplidar/scan"/>
+-->
+  </node>
+
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain"
+      name="laser_filter">
+    <rosparam command="load" file="$(find rplidar_ros)/config/laser_params.yaml" />
+  </node>
+</launch>
