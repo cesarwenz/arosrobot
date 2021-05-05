@@ -141,7 +141,7 @@
 
   <xacro:rgbd_cameras topic_azure="azure" parent_link="base_link"/>
   <xacro:imu_setup topic_imu_um7="um7/imu/data" topic_imu_azure="azure/imu/data" parent_link="base_link"/>
-  <xacro:lidar_setup topic_lidar_vlp16="vlp16/scan" topic_lidar_rplidar="rplidar/scan" parent_link="base_link"/>
+  <xacro:lidar_setup topic_lidar_vlp16="vlp16/scan" topic_lidar_rplidar="/scan" parent_link="base_link"/>
 
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
