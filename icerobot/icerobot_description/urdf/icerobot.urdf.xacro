@@ -157,7 +157,7 @@
       <updateRate>40</updateRate>
       <bodyName>base_link</bodyName>
       <frameId>base_link</frameId>
-      <topicName>navsat/fix</topicName>
+      <topicName>gps/fix</topicName>
       <velocityTopicName>navsat/vel</velocityTopicName>
       <referenceLatitude>42.86</referenceLatitude>
       <referenceLongitude>-80.27</referenceLongitude>

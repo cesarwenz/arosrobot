@@ -4,7 +4,8 @@ ekf_se_odom:
   transform_timeout: 0.0
   two_d_mode: true
   print_diagnostics: true
-  transform_time_offset: 0
+  transform_time_offset: 1
+  predict_to_current_time: true
   debug: false
   
   map_frame: map
@@ -38,7 +39,8 @@ ekf_se_odom:
 
 ekf_se_map:
   frequency: 5 
-  transform_time_offset: 0.0
+  transform_time_offset: 1
+  predict_to_current_time: true
   sensor_timeout: 0.1
   two_d_mode: true
   transform_timeout: 0.0
