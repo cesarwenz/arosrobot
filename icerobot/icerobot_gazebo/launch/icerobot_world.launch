@@ -30,12 +30,8 @@
   <!-- Load controller configuration -->
   <rosparam command="load" file="$(find icerobot_control)/config/control.yaml" />
 
-  <!-- Spawn controllers -->
-  <node name="base_controller_spawner" pkg="controller_manager" type="spawner"
-        args="icerobot_joint_publisher icerobot_velocity_controller"/>
-
   <!-- Start EKF for localization -->
-  <include file="$(find icerobot_control)/launch/icerobot_localization.launch">
+  <include file="$(find icerobot_control)/launch/gazebo_localization.launch">
   </include>
 
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />

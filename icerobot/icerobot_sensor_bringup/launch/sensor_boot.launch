@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <!-- Start EKF for localization-->
-  <include file="$(find icerobot_control)/launch/icerobot_navsat_localization.launch">
+  <include file="$(find icerobot_control)/launch/navsat_localization.launch">
   </include>
 
   <!-- IMU sensor -->

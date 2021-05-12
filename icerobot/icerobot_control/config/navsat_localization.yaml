@@ -4,7 +4,7 @@ ekf_se_odom:
   transform_timeout: 0.0
   two_d_mode: true
   print_diagnostics: true
-  transform_time_offset: 1
+  transform_time_offset: 0.1
   predict_to_current_time: true
   debug: false
   
@@ -39,7 +39,7 @@ ekf_se_odom:
 
 ekf_se_map:
   frequency: 5 
-  transform_time_offset: 1
+  transform_time_offset: 0.1
   predict_to_current_time: true
   sensor_timeout: 0.1
   two_d_mode: true
@@ -93,7 +93,7 @@ navsat_transform:
   magnetic_declination_radians: 0.169646  # For lat/long 42.86N, 80.27W
   yaw_offset: 0.0  # should report 0 when facing east
   zero_altitude: true
-  broadcast_utm_transform: true
+  broadcast_cartesian_transform: true
   publish_filtered_gps: true
   use_odometry_yaw: false
   wait_for_datum: false
