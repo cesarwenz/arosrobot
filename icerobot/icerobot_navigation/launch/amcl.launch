@@ -1,12 +1,23 @@
 <?xml version="1.0"?>
 <launch>
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain"
+      name="laser_filter">
+    <rosparam command="load" file="$(find rplidar_ros)/config/laser_params.yaml" />
+  </node>
 
-  <arg name="use_map_topic" default="true"/>
-  <arg name="scan_topic" default="$(eval optenv('HUSKY_LASER_TOPIC', 'scan'))" />
+  <arg name="use_map_topic" default="false"/>
+  <arg name="scan_topic" default="scan" />
+  <arg name="amcl_map_frame" default="map"/>
+  <arg name="init_x" default="0.0"/>
+  <arg name="init_y" default="0.0"/>
+  <arg name="init_a" default="0.0"/>
 
   <node pkg="amcl" type="amcl" name="amcl">
     <param name="use_map_topic" value="$(arg use_map_topic)"/>
     <!-- Publish scans from best pose at a max of 10 Hz -->
+    <param name="initial_pose_x" value="$(arg init_x)"/>
+    <param name="initial_pose_y" value="$(arg init_y)"/>
+    <param name="initial_pose_a" value="$(arg init_a)"/>
     <param name="odom_model_type" value="diff"/>
     <param name="odom_alpha5" value="0.1"/>
     <param name="gui_publish_rate" value="10.0"/>
@@ -39,6 +50,7 @@
     <param name="transform_tolerance" value="1.0"/>
     <param name="recovery_alpha_slow" value="0.0"/>
     <param name="recovery_alpha_fast" value="0.0"/>
+    <param name="global_frame_id" value="$(arg amcl_map_frame)"/>
     <remap from="scan" to="$(arg scan_topic)"/>
   </node>
 

@@ -5,7 +5,7 @@ world_frame: odom
 
 two_d_mode: true
 
-frequency: 30
+frequency: 50
 sensor_timeout: 0.1
 
 odom0: icerobot_velocity_controller/odom

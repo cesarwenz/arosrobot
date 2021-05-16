@@ -1,5 +1,5 @@
 ekf_se_odom:
-  frequency: 30
+  frequency: 50
   sensor_timeout: 0.1
   transform_timeout: 0.0
   two_d_mode: true
@@ -85,15 +85,26 @@ ekf_se_map:
   imu0_relative: false
   imu0_queue_size: 10
   imu0_remove_gravitational_acceleration: true
+  #pose0: amcl_pose
+  #pose0_config: [true,  true,  false,
+  #               false, false, true,
+  #               false, false, false,
+  #               false, false, false,
+  #               false, false, false]
+  #pose0_differential: false
+  #pose0_nodelay: true
+  #pose0_queue_size: 10
+  #pose0_relative: false
+  #pose0_rejection_threshold: 2.0
 
 
 navsat_transform:
   frequency: 5
   delay: 0 
   magnetic_declination_radians: 0.16667894  # For lat/long 42.86N, 80.27W
-  yaw_offset: 0  # should report 0 when facing east
+  yaw_offset: 1.47  # should report 0 when facing east
   zero_altitude: true
   broadcast_cartesian_transform: true
   publish_filtered_gps: true
   use_odometry_yaw: false
-  wait_for_datum: false
+  Wait_for_datum: false

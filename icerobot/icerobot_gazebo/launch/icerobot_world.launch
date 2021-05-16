@@ -5,7 +5,7 @@
   <arg name="x" default="0.0"/>
   <arg name="y" default="0.0"/>
   <arg name="z" default="0.0"/>
-  <arg name="yaw" default="-3.16"/>
+  <arg name="yaw" default="-1.57"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find husky_gazebo)/worlds/clearpath_playpen.world"/>
@@ -28,10 +28,15 @@
             -param robot_description
 	    -model $(arg robot_namespace)"/>
   <!-- Load controller configuration -->
-  <rosparam command="load" file="$(find icerobot_control)/config/control.yaml" />
+  <rosparam command="load" file="$(find icerobot_control)/config/gazebo_control.yaml" />
+
+
+  <!-- Spawn controllers -->
+  <node name="base_controller_spawner" pkg="controller_manager" type="spawner"
+        args="icerobot_joint_publisher icerobot_velocity_controller"/>
 
   <!-- Start EKF for localization -->
-  <include file="$(find icerobot_control)/launch/gazebo_localization.launch">
+  <include file="$(find icerobot_control)/launch/local_localization.launch">
   </include>
 
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
