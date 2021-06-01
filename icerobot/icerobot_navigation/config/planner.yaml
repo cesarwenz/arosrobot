@@ -14,7 +14,7 @@ TrajectoryPlannerROS:
 
   max_vel_theta: 1.5
   min_vel_theta: -1.5
-  min_in_place_vel_theta: 0.4
+  min_in_place_vel_theta: 0.0
 
   holonomic_robot: false
   escape_vel: -1.5
@@ -64,9 +64,9 @@ DWAPlannerROS:
   max_vel_x: 2.5
   min_vel_y: 0.0
   max_vel_y: 0.0
-  min_vel_theta: -0.4
-  max_vel_theta: 0.4
-  min_in_place_vel_theta: 0.4
+  min_vel_theta: -0.6
+  max_vel_theta: 0.6
+  min_in_place_vel_theta: 0.6
 
   # Goal Tolerance Parameters
   yaw_goal_tolerance: 1.57
@@ -79,7 +79,7 @@ DWAPlannerROS:
   vx_samples: 10
   vy_samples: 0
   vtheta_samples: 20
-  penalize_negative_x: true
+  penalize_negative_x: false
 
   # Trajectory scoring parameters
   path_distance_bias: 32.0 
