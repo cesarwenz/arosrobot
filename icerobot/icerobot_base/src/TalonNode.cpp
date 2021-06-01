@@ -127,7 +127,7 @@ void TalonNode::update()
         this->disabled = false;
     }
 
-    // Set Talon outpuudo 
+    // Set Talon output 
     if (this->_output.data == 0.0 or !this->configured) {
         talon.NeutralOutput();
     } else {

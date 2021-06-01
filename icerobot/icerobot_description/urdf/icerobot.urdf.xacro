@@ -25,31 +25,31 @@
   <xacro:property name="wheel_radius" value="0.167" />
 
   <!-- Base inertia properties -->
-  <xacro:property name="mass_base" value="34.33" />
-  <xacro:property name="ixx_base" value="2.4304" />
-  <xacro:property name="ixy_base" value="0.5116" />
-  <xacro:property name="ixz_base" value="0.0091" />
-  <xacro:property name="iyy_base" value="3.7564" />
-  <xacro:property name="iyz_base" value="-0.0016" />
-  <xacro:property name="izz_base" value="3.8077" />
+  <xacro:property name="mass_base" value="49.7354" />
+  <xacro:property name="ixx_base" value="2.6820" />
+  <xacro:property name="ixy_base" value="0.5001" />
+  <xacro:property name="ixz_base" value="0.0135" />
+  <xacro:property name="iyy_base" value="4.3224" />
+  <xacro:property name="iyz_base" value="-0.0044" />
+  <xacro:property name="izz_base" value="4.3573" />
 
   <!-- Platform inertia properties -->
-  <xacro:property name="mass_platform" value="49.4938" />
-  <xacro:property name="ixx_platform" value="16.83" />
-  <xacro:property name="ixy_platform" value="0.3363" />
-  <xacro:property name="ixz_platform" value="0.1616" />
-  <xacro:property name="iyy_platform" value="3.9954" />
-  <xacro:property name="iyz_platform" value="6.3377" />
-  <xacro:property name="izz_platform" value="13.2782" />
+  <xacro:property name="mass_platform" value="10.9227" />
+  <xacro:property name="ixx_platform" value="7.8672" />
+  <xacro:property name="ixy_platform" value="0.5195" />
+  <xacro:property name="ixz_platform" value="0.0006" />
+  <xacro:property name="iyy_platform" value="0.3726" />
+  <xacro:property name="iyz_platform" value="0.0069" />
+  <xacro:property name="izz_platform" value="8.1169" />
   
   <!-- Wheel inertia properties -->
-  <xacro:property name="mass_wheel" value="4" />
-  <xacro:property name="ixx_wheel" value="0.0553" />
-  <xacro:property name="ixy_wheel" value="0" />
-  <xacro:property name="ixz_wheel" value="0" />
-  <xacro:property name="iyy_wheel" value="0.0315" />
-  <xacro:property name="iyz_wheel" value="0" />
-  <xacro:property name="izz_wheel" value="0.0315" />
+  <xacro:property name="mass_wheel" value="4.3340" />
+  <xacro:property name="ixx_wheel" value="0.6036" />
+  <xacro:property name="ixy_wheel" value="0.1952" />
+  <xacro:property name="ixz_wheel" value="0.4462" />
+  <xacro:property name="iyy_wheel" value="0.9226" />
+  <xacro:property name="iyz_wheel" value="0.2116" />
+  <xacro:property name="izz_wheel" value="0.5513" />
   
   <xacro:arg name="robot_namespace" default="/" />
   <xacro:property name="PI" value="3.14159"/>
@@ -154,10 +154,10 @@
   <gazebo>
     <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
       <robotNamespace>$(arg robot_namespace)</robotNamespace>
-      <updateRate>40</updateRate>
+      <updateRate>10</updateRate>
       <bodyName>base_link</bodyName>
       <frameId>base_link</frameId>
-      <topicName>navsat/fix</topicName>
+      <topicName>gps/fix</topicName>
       <velocityTopicName>navsat/vel</velocityTopicName>
       <referenceLatitude>42.86</referenceLatitude>
       <referenceLongitude>-80.27</referenceLongitude>

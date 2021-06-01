@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <launch>
+<<<<<<< HEAD
   <include file="$(find icerobot_control)/launch/icerobot_navsat_localization.launch">
+=======
+  <!-- Start EKF for localization-->
+  <include file="$(find icerobot_control)/launch/navsat_localization.launch">
+>>>>>>> 294fc387b545dc571939b9cb2e4d93a8fa3c8f8b
   </include>
   <!-- IMU sensor -->
   <include file="$(find um7_imu)/launch/um7.launch">

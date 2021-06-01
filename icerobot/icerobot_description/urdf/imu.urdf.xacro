@@ -9,22 +9,30 @@
       <parent link="${parent_link}" />
       <child link="um7_imu_link" />
     </joint>
-    <gazebo reference="um7_imu_link">
+
+    <link name="um7_imu_link_gazebo"/>
+    <joint name="um7_imu_joint_gazebo" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="um7_imu_link" />
+      <child link="um7_imu_link_gazebo" />
+    </joint>
+
+    <gazebo reference="um7_imu_link_gazebo">
     </gazebo>
     <gazebo>
       <plugin name="um_7_imu_controller" filename="libhector_gazebo_ros_imu.so">
         <robotNamespace>$(arg robot_namespace)</robotNamespace>
         <updateRate>50.0</updateRate>
-        <bodyName>${parent_link}</bodyName>
+        <bodyName>um7_imu_link</bodyName>
         <topicName>${topic_imu_um7}</topicName>
         <xyzOffset>0 0 0</xyzOffset>
-        <rpyOffset>0 0 0</rpyOffset>
-        <accelDrift>0.005 0.005 0.005</accelDrift>
-        <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
-        <rateDrift>0.005 0.005 0.005 </rateDrift>
-        <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
-        <headingDrift>0.005</headingDrift>
-        <headingGaussianNoise>0.005</headingGaussianNoise>
+        <rpyOffset>0 0 1.57</rpyOffset>
+        <accelDrift>0 0 0</accelDrift>
+        <accelGaussianNoise>0 0 0</accelGaussianNoise>
+        <rateDrift>0 0 0 </rateDrift>
+        <rateGaussianNoise>0 0 0 </rateGaussianNoise>
+        <headingDrift>0</headingDrift>
+        <headingGaussianNoise>0</headingGaussianNoise>
       </plugin>
     </gazebo>
 
@@ -38,7 +46,6 @@
     
     <gazebo reference="azure_imu_link">
     </gazebo>
-
     <gazebo>
       <plugin name="azure_imu_controller" filename="libhector_gazebo_ros_imu.so">
         <robotNamespace>$(arg robot_namespace)</robotNamespace>
