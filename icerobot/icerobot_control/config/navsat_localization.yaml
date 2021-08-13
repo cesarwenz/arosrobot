@@ -1,5 +1,5 @@
 ekf_se_odom:
-  frequency: 30
+  frequency: 20
   sensor_timeout: 0.1
   transform_timeout: 0.0
   two_d_mode: true
@@ -40,12 +40,12 @@ ekf_se_odom:
 ekf_se_map:
   frequency: 5 
   transform_time_offset: 0.1
-  predict_to_current_time: true
   sensor_timeout: 0.1
   two_d_mode: true
   transform_timeout: 0.0
   print_diagnostics: true
   debug: false
+  predict_to_current_time: true
 
   map_frame: map
   odom_frame: odom
@@ -91,7 +91,7 @@ navsat_transform:
   frequency: 5
   delay: 0 
   magnetic_declination_radians: 0.16667894  # For lat/long 42.86N, 80.27W
-  yaw_offset: 0  # should report 0 when facing east
+  yaw_offset: -1.57  # should report 0 when facing east
   zero_altitude: true
   broadcast_cartesian_transform: true
   publish_filtered_gps: true

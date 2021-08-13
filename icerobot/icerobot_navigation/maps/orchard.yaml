@@ -1,7 +1,0 @@
-image: /home/agx/agx_ws/src/icerobot/icerobot_navigation/maps/orchard.pgm
-resolution: 0.100000
-origin: [-26.300000, -10.400000, nan]
-negate: 0
-occupied_thresh: 0.65
-free_thresh: 0.196
-
