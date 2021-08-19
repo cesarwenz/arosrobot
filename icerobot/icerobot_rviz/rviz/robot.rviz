@@ -11,7 +11,6 @@ Panels:
         - /Sensing1/Global Odom1/Shape1
         - /Sensing1/PointCloud21
         - /Navigation1/Exploration1
-        - /Map1/Status1
       Splitter Ratio: 0.49700599908828735
     Tree Height: 329
   - Class: rviz/Selection
@@ -137,6 +136,10 @@ Visualization Manager:
           Show Trail: false
           Value: true
         um7_imu_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        um7_imu_link_gazebo:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -620,5 +623,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 960
-  X: 0
-  Y: 0
+  X: 67
+  Y: 27
