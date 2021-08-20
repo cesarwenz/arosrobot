@@ -14,7 +14,7 @@ raytrace_range: 6.0
 
 #layer definitions
 static:
-    map_topic: projected_map
+    map_topic: map 
     subscribe_to_updates: true
 
 obstacles_laser:

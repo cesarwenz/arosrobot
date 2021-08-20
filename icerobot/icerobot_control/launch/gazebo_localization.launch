@@ -24,10 +24,8 @@
 	-->
     <remap from="imu/data" to="um7/imu/data"/>
   </node>
-    <!--
-  <arg name="map_file" default="$(find icerobot_navigation)/maps/playpen2.yaml"/>
+  <arg name="map_file" default="$(find icerobot_navigation)/maps/extended_map.yaml"/>
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
-	-->
   <arg name="scan_topic" default="scan" />
 
   <include file="$(find icerobot_navigation)/launch/move_base.launch" />
