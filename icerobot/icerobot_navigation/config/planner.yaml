@@ -1,5 +1,18 @@
 controller_frequency: 5.0
-recovery_behaviour_enabled: true
+recovery_behaviour_enabled: true 
+
+GlobalPlanner:
+  allow_unknown: true 
+  default_tolerance: 0.5 
+  use_dijkstra: false
+  orientation_mode: 1
+  use_grid_path: true 
+  use_quadratic: false
+  cost_factor: 0.55
+  neutral_cost: 66
+  lethal_cost: 253
+  publish_potential: false
+
 
 NavfnROS:
   allow_unknown: true 
@@ -69,22 +82,22 @@ DWAPlannerROS:
   min_in_place_vel_theta: 0.6
 
   # Goal Tolerance Parameters
-  yaw_goal_tolerance: 1.57
-  xy_goal_tolerance: 0.4
+  yaw_goal_tolerance: 3.14
+  xy_goal_tolerance: 1.0
   latch_xy_goal_tolerance: false
 
   # # Forward Simulation Parameters
-  sim_time: 2.0
+  sim_time: 3.0
   sim_granularity: 0.025
-  vx_samples: 10
+  vx_samples: 20
   vy_samples: 0
-  vtheta_samples: 20
+  vtheta_samples: 40
   penalize_negative_x: false
 
   # Trajectory scoring parameters
   path_distance_bias: 32.0 
-  goal_distance_bias: 24.0 
-  occdist_scale: 1.0 
+  goal_distance_bias: 20.0 
+  occdist_scale: 0.02 
   forward_point_distance: 0.325 
   stop_time_buffer: 0.2  
   scaling_speed: 0.25 
