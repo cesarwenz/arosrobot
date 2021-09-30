@@ -83,6 +83,9 @@ namespace carrot_planner{
        * @param plan The plan... filled by the planner
        * @return True if a valid plan was found, false otherwise
        */
+      
+      float* Readfile2D(const char* filename);
+
       bool makePlan(const geometry_msgs::PoseStamped& start, 
           const geometry_msgs::PoseStamped& goal, std::vector<geometry_msgs::PoseStamped>& plan);
 

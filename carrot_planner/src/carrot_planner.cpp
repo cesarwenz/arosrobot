@@ -92,7 +92,7 @@ namespace carrot_planner {
     return footprint_cost;
   }
 
-  float* CarrotPlanner::Readfile2D (char* filename)
+  float* CarrotPlanner::Readfile2D (const char* filename)
   {
       int i ,n;
       float *array = NULL;
@@ -107,15 +107,16 @@ namespace carrot_planner {
       fscanf(fp, "%d", &n);
       fgets(read, 100, fp);
   
-      array=(float*)calloc(2*n,sizeof(float));
+      array = new float [2*n];
+
       if(array==NULL)
   	ROS_INFO("Error in dynamic memory allocation");
   
       for(i = 0; i < n; i ++)
       {
   	//get the value
-  	fscanf(fp, "%s", &read); array[i*2] = (float)atof(read);
-  	fscanf(fp, "%s", &read); array[i*2+1] = (float)atof(read);
+  	fscanf(fp, "%s", read); array[i*2] = (float)atof(read);
+  	fscanf(fp, "%s", read); array[i*2+1] = (float)atof(read);
   
   	//flush of comments
   	fgets(read, 100, fp);
@@ -144,52 +145,42 @@ bool CarrotPlanner::makePlan(const geometry_msgs::PoseStamped& start, const geom
       return false;
     }
 
-   bool done = false;
+    bool done = false;
 
-  int i,n;
-  float *Coordinate_Array = NULL;
-  char* Filename;
-  Filename = "/home/surface/agx/icerobot/carrot_planner/path/path.txt";
-  FILE *fp = NULL;
-  fp = fopen(Filename, "r");
-  fscanf(fp, "%d", &n);
+    int i,n;
+    float *Coordinate_Array = NULL;
+    const char* Filename;
+    Filename = "/home/icedesktop/agx_ws/src/carrot_planner/path/path.txt";
+    FILE *fp = NULL;
+    fp = fopen(Filename, "r");
+    fscanf(fp, "%d", &n);
 
-  Coordinate_Array = Readfile2D(Filename);
+    Coordinate_Array = Readfile2D(Filename);
 
+    plan.push_back(start);
     for (i=0; i<n; i++)
     {
         geometry_msgs::PoseStamped first_start = start;
-        geometry_msgs::PoseStamped first_goal = goal;
 
-        first_start.pose.position.x=Coordinate_Array[i*2]-Coordinate_Array[0];//offset
-        first_start.pose.position.y=Coordinate_Array[i*2+1]-Coordinate_Array[1];
+        first_start.pose.position.x=Coordinate_Array[i*2];//offset
+        first_start.pose.position.y=Coordinate_Array[i*2+1];
 
-        first_goal.pose.position.x=Coordinate_Array[i*2+2]-Coordinate_Array[0];
-        first_goal.pose.position.y=Coordinate_Array[i*2+3]-Coordinate_Array[1];
 
-        plan.push_back(first_start);
-
-        tf::Stamped<tf::Pose> goal_tf;
-        tf::Stamped<tf::Pose> start_tf;
-
-        poseStampedMsgToTF(first_goal,goal_tf);
-        poseStampedMsgToTF(first_start,start_tf);
-
-        double useless_pitch, useless_roll, goal_yaw, start_yaw;
-        start_tf.getBasis().getEulerYPR(start_yaw, useless_pitch, useless_roll);
-        goal_tf.getBasis().getEulerYPR(goal_yaw, useless_pitch, useless_roll);
-
-        double goal_x = first_goal.pose.position.x;
-        double goal_y = first_goal.pose.position.y;
+    	const double start_yaw = tf2::getYaw(start.pose.orientation);
+    	const double goal_yaw = tf2::getYaw(goal.pose.orientation);
+        
+        double goal_x = first_start.pose.position.x;
+        double goal_y = first_start.pose.position.y;
 
         double target_x = goal_x;
         double target_y = goal_y;
         double target_yaw = goal_yaw;
 
-        geometry_msgs::PoseStamped new_goal = first_goal;
-        tf::Quaternion goal_quat = tf::createQuaternionFromYaw(target_yaw);
-
-        new_goal.pose.position.x = target_x;
+        geometry_msgs::PoseStamped new_goal = first_start;
+	tf2::Quaternion goal_quat;
+     	goal_quat.setRPY(0, 0, target_yaw);
+        
+	new_goal.pose.position.x = target_x;
         new_goal.pose.position.y = target_y;
 
         new_goal.pose.orientation.x = goal_quat.x();
