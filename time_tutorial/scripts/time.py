@@ -4,14 +4,22 @@ from std_msgs.msg import String
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 
-def callback(data):
-    rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+odom = Odometry ()
 
-def controller():
+def callback(data):
+    global odom
+    odom = data
+    printer(odom)
+    sub.unregister()
+
+def printer(data):
+    rospy.loginfo("I heard x_pos: %s", data.pose.pose.position.x)
+    rospy.loginfo("I heard y_pos: %s", data.pose.pose.position.y)
+
+def simple_input():
+    rospy.init_node('simple_input', anonymous=True)
     velocity_publisher = rospy.Publisher('/icerobot_velocity_controller/cmd_vel', Twist, queue_size=10)
-    rospy.init_node('controller', anonymous=True)
     vel_msg = Twist()
-    #Receiveing the user's input
     #Receiveing the user's input
     print("Let's move your robot")
     speed = input("Input your speed:")
@@ -29,37 +37,47 @@ def controller():
     vel_msg.angular.y = 0
     vel_msg.angular.z = 0
 
-    rate = rospy.Rate(10) # 10hz
-    while not rospy.is_shutdown():
-        #Setting the current time for distance calculus
-        t0 = rospy.Time.now().to_sec()
-        current_distance = 0
+    #Setting the current time for distance calculus
+    t0 = rospy.Time.now().to_sec()
+    current_distance = 0
 
-        #Loop to move the turtle in an specified distance
-        while(current_distance < distance):
-            #Publish the velocity
-            velocity_publisher.publish(vel_msg)
-            #Takes actual time to velocity calculus
-            t1=rospy.Time.now().to_sec()
-            #Calculates distancePoseStamped
-            current_distance= speed*(t1-t0)
-        #After the loop, stops the robot
-        vel_msg.linear.x = 0
-        #Force the robot to stop
+    #Loop to move the turtle in an specified distance
+    while(current_distance < distance):
+        #Publish the velocity
         velocity_publisher.publish(vel_msg)
-        rate.sleep()
+        #Takes actual time to velocity calculus
+        t1=rospy.Time.now().to_sec()
+        #Calculates distancePoseStamped
+        current_distance= speed*(t1-t0)
+    #After the loop, stops the robot
+    vel_msg.linear.x = 0
+    #Force the robot to stop
+    velocity_publisher.publish(vel_msg)
+    print('done')
 
+def controller_input(u):
+    rospy.init_node('simple_input', anonymous=True)
+    velocity_publisher = rospy.Publisher('/icerobot_velocity_controller/cmd_vel', Twist, queue_size=10)
+    vel_msg = Twist()
+
+    vel_msg.linear.x = u(1)
+    vel_msg.linear.y = 0
+    vel_msg.linear.z = 0
+    vel_msg.angular.x = 0
+    vel_msg.angular.y = 0
+    vel_msg.angular.z = 0
+    velocity_publisher.publish(vel_msg)
 
 def states():
-    rospy.init_node('listener', anonymous=True)
-    rospy.Subscriber("states", String, callback)
-
-    # spin() simply keeps python from exiting until this node is stopped
-    rospy.spin()
+    rospy.init_node('states', anonymous=True)
+    #sub = rospy.Subscriber("/odometry/filtered_map", Odometry, callback)
+    msg = rospy.wait_for_message("/odometry/filtered_map", Odometry)
+    printer(msg)
+    return msg 
 
 
 if __name__ == '__main__':
     try:
-        talker()
+        controller()
     except rospy.ROSInterruptException:
         pass
