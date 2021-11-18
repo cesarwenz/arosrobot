@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 import rospy
+import numpy as np
+import tf
+import geometry_msgs
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
@@ -72,12 +75,20 @@ def states():
     rospy.init_node('states', anonymous=True)
     #sub = rospy.Subscriber("/odometry/filtered_map", Odometry, callback)
     msg = rospy.wait_for_message("/odometry/filtered_map", Odometry)
-    printer(msg)
-    return msg 
+    quaternion = (
+        msg.pose.pose.orientation.x,
+        msg.pose.pose.orientation.y,
+        msg.pose.pose.orientation.z,
+        msg.pose.pose.orientation.w)
+    x = msg.pose.pose.position.x
+    y = msg.pose.pose.position.y
+    th = tf.transformations.euler_from_quaternion(quaternion)[2] 
+    states = np.array([x, y, th])
+    return states
 
 
 if __name__ == '__main__':
     try:
-        controller()
+        states()
     except rospy.ROSInterruptException:
         pass
