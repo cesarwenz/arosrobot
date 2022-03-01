@@ -32,7 +32,7 @@
     </link>
   
     <joint name="azure_camera_visor_joint" type="fixed">
-      <origin xyz="0.07 0 0.025" rpy="${-PI/2-0.1} 0 ${-PI/2}"/>
+      <origin xyz="0.07 0 0.025" rpy="0 0 0"/>
       <parent link="azure_camera_body"/>
       <child link="azure_camera_visor"/>
     </joint>
@@ -47,13 +47,13 @@
     </joint>
 
     <link name="azure_imu_link"/>
- -->
     <joint name="azure_lens_gazebo_joint" type="fixed">
 	    <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="azure_camera_visor"/>
       <child link="azure_camera"/>
     </joint>
     
+ -->
     <!-- Kinect camera joints 
     <joint name="kinect_camera_joint" type="fixed">
       <origin xyz="0.3 0.007 0.65" rpy="0 0 0"/>
@@ -93,22 +93,21 @@
 
     <xacro:macro name="depth_cam_init" params="
                frame:=cam_name           topic:=cam_topic
-               h_fov:=1.3090             v_fov:=1.1345
+               h_fov:=1.3090             v_fov:=1.2345
                min_range:=0.5            max_range:=3.86
                width:=640                height:=576
                update_rate:=30
                robot_namespace:=/">
 	       
-      <link name="${frame}" />
 
       <link name="${frame}_gazebo" />
       <joint name="${frame}_gazebo_joint" type="fixed">
-        <parent link="${frame}"/>
+        <parent link="${frame}_visor"/>
         <child link="${frame}_gazebo"/>
-        <origin xyz="0.0 0 0" rpy="-1.5707963267948966 0 -1.5707963267948966"/>
+	<origin xyz="0.0 0 0" rpy="${-PI/2} 0 ${-PI/2}"/>
       </joint>
-      <gazebo reference="${frame}">
-        <sensor type="depth" name="${frame}">
+      <gazebo reference="${frame}_visor">
+        <sensor type="depth" name="${frame}_gazebo">
           <update_rate>${update_rate}</update_rate>
           <camera>
             <horizontal_fov>${h_fov}</horizontal_fov>

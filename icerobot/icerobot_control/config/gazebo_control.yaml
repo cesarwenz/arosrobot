@@ -15,10 +15,10 @@ icerobot_velocity_controller:
   velocity_rolling_window_size: 2
 
   # Base frame_id
-  base_frame_id: base_link 
+  base_frame_id: base_link
 
-  enable_odom_tf: false 
-  odom_frame_id: wheel_odom
+  enable_odom_tf: false
+  odom_frame_id: map
   publish_cmd: true 
   estimate_velocity_from_position: false
 

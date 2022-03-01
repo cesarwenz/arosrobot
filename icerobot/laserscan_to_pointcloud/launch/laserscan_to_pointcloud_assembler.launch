@@ -143,5 +143,4 @@
                 <remap from="cloud_in" to="/rplidar_points" />
         </node>
 	-->
-
 </launch>
