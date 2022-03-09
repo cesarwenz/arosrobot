@@ -11,15 +11,16 @@
   <include file="$(find nmea_navsat_driver)/launch/nmea_serial_driver.launch">
   </include>
   <!-- Velodyne LiDAR --> 
+  <!--
   <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
   </include>
   <include file="$(find azure_kinect_ros_driver)/launch/driver.launch">
   </include>
+  -->
   <!-- RPLidar -->
   <include file="$(find rplidar_ros)/launch/rplidar_s1.launch">
   </include>
-  <!--
-  <arg name="map_file" default="$(find icerobot_navigation)/maps/orchard.yaml"/>
+  <arg name="map_file" default="$(find icerobot_navigation)/maps/orchard_real.yaml"/>
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
   <arg name="scan_topic" default="scan" />
 
