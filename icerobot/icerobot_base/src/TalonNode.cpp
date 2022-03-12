@@ -18,7 +18,7 @@ TalonNode::TalonNode(const ros::NodeHandle& parent, const std::string& name, int
     , talon(id)
     , statusPub(nh.advertise<MotorStatus>("status", 0.5))
     , anglePub(nh.advertise<std_msgs::Float32>("angle", 1))
-    , setSub(nh.subscribe("set", 1, &TalonNode::set, this))
+    , setSub(nh.subscribe("set", 1, &TalonNode::set, this)) // subscribe to set 
     , lastUpdate(ros::Time::now()) // watchdog - turn off talon if we haven't gotten an update in a while
     , _controlMode(ControlMode::Velocity)
     , disabled(false)
@@ -33,10 +33,11 @@ TalonNode::TalonNode(const ros::NodeHandle& parent, const std::string& name, int
 }
 
 void TalonNode::set(MotorControl output)
+// Send velocity commands (gearbox is 1:70) and resolution is 2048 cpr
 {
     boost::recursive_mutex::scoped_lock scoped_lock(mutex);
     this->_controlMode = (ControlMode) output.mode;
-    this->_output.data = output.value * 6909.89;
+    this->_output.data = output.value * 6909.89; // velocity in falcon is given as ticks/100ms
     this->lastUpdate = ros::Time::now();
 }
 
@@ -44,13 +45,14 @@ void TalonNode::reconfigure(const TalonConfig& config, uint32_t level)
 {
     if (level == 0) {
         boost::recursive_mutex::scoped_lock scoped_lock(mutex);
-        ROS_INFO("Reconfigure called on %s", _name.c_str());
+        ROS_WARN("Reconfigure called on %s", _name.c_str());
         this->_config = config;
         this->configured = false;
     }
 }
 
 void TalonNode::configure()
+// configures all parameters defined in Talon.cfg file
 {
     boost::recursive_mutex::scoped_lock scoped_lock(mutex);
     if (talon.GetFirmwareVersion() == -1) {
@@ -106,6 +108,7 @@ void TalonNode::configure()
 }
 
 void TalonNode::update()
+// main control loop
 {
     boost::recursive_mutex::scoped_lock scoped_lock(mutex);
 
@@ -123,7 +126,7 @@ void TalonNode::update()
         this->_output.data = 0.0;
     } else {
         if (this->disabled)
-            ROS_INFO("Talon re-enabled for receiving updates: %s", _name.c_str());
+            ROS_WARN("Talon re-enabled for receiving updates: %s", _name.c_str());
         this->disabled = false;
     }
 
@@ -134,6 +137,7 @@ void TalonNode::update()
         talon.Set(this->_controlMode, this->_output.data);
     }
 
+    // Collect status of motor and publish it under MotorStatus message
     MotorStatus status;
     status.temperature = talon.GetTemperature();
     status.bus_voltage = talon.GetBusVoltage();
@@ -147,10 +151,11 @@ void TalonNode::update()
     
     status.fwd_limit = talon.GetSensorCollection().IsFwdLimitSwitchClosed();
     status.rev_limit = talon.GetSensorCollection().IsRevLimitSwitchClosed();
-
+    
     std_msgs::Float32 angle;
-    angle.data = ( status.position * (2*M_PI / 143360)); 
-
+    angle.data = ( status.position * (2*M_PI / 143360)); //angle is given by the ticks per revolution 
+    
+    //publish angle and status
     statusPub.publish(status);
     anglePub.publish(angle);
 }

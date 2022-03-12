@@ -18,7 +18,7 @@ icerobot_velocity_controller:
   base_frame_id: base_link 
 
   enable_odom_tf: false 
-  odom_frame_id: wheel_odom
+  odom_frame_id: map  
   publish_cmd: false 
   estimate_velocity_from_position: false
 

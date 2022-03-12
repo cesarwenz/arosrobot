@@ -6,7 +6,7 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
 
-  <rosparam command="load" file="$(find icerobot_base)/launch/hw_config.yaml" />
+  <rosparam command="load" file="$(find icerobot_base)/cfg/hw_config.yaml" />
   <node name="icerobot_base_control" 
         pkg="icerobot_base" 
         type="icerobot_base_control"/>

@@ -9,10 +9,11 @@ int main(int argc, char** argv)
     ros::NodeHandle nh;
     std::vector<std::unique_ptr<TalonNode>> talons;
 
-    // Need to set this so that phoenix knows what interface to use
+    // set which CAN interference robot uses 
     std::string interface = "can0";
     ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
-
+   
+    // Configure each talon using hw_config.yaml file
     XmlRpc::XmlRpcValue v;
     nh.getParam("talons", v);
     std::for_each(v.begin(), v.end(), [&nh, &talons](auto p) {
@@ -20,6 +21,7 @@ int main(int argc, char** argv)
         XmlRpc::XmlRpcValue v(p.second);
         if (v.getType() == XmlRpc::XmlRpcValue::TypeStruct) {
             TalonConfig config; // Generated from Talon.cfg
+	    // if changes are in the yaml file, apply to the Talon.cfg file
             dynamic_reconfigure::Server<TalonConfig>().getConfigDefault(config);
             if (v.hasMember("id")) {
                 int id = v["id"];
@@ -41,6 +43,7 @@ int main(int argc, char** argv)
                     config.Izone = (double)v["Izone"];
 
                 auto node = ros::NodeHandle(nh, name);
+		//create talons with their id
                 talons.push_back(std::make_unique<TalonNode>(node, name, id, config));
                 ROS_INFO("Created Talon with name '%s' and id '%d'", name.c_str(), id);
             } else {
