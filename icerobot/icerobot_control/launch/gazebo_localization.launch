@@ -24,7 +24,7 @@
 	-->
     <remap from="imu/data" to="um7/imu/data"/>
   </node>
-  <arg name="map_file" default="$(find icerobot_navigation)/maps/orchard_real.yaml"/>
+  <arg name="map_file" default="$(find icerobot_navigation)/maps/real_orchard_1.yaml"/>
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
   <arg name="scan_topic" default="scan" />
 
