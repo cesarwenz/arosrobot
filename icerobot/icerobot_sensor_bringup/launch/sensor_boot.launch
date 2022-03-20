@@ -24,7 +24,7 @@
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
   <arg name="scan_topic" default="scan" />
   <include file="$(find laserscan_to_pointcloud)/launch/laserscan_to_pointcloud_assembler.launch" />
-  -->
+  <!--
   <include file="$(find icerobot_navigation)/launch/move_base.launch" />
   -->
 </launch>

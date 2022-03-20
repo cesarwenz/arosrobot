@@ -27,8 +27,8 @@ public:
   MyRobotHWInterface();
 
   void write() {
-    double diff_ang_speed_left = cmd[0];
-    double diff_ang_speed_right = cmd[1];
+    double diff_ang_speed_left = cmd[0]*5 / 7;
+    double diff_ang_speed_right = cmd[1]*5 / 7;
     limitDifferentialSpeed(diff_ang_speed_left, diff_ang_speed_right);
     
     std_msgs::Float64 left_wheel_vel_msg;
