@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find arosrobot_base)/launch/hw_control.launch">
+  </include>
+  
+  
+<!--
+  <include file="$(find arosrobot_key)/launch/arosrobot_teleop_key.launch">
+  </include>
+-->
+  <include file="$(find arosrobot_sensor_bringup)/launch/sensor_boot.launch">
+  </include>
+
+</launch>

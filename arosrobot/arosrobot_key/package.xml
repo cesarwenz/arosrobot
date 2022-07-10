@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>arosrobot_key</name>
+  <version>0.0.0</version>
+  <description>The package</description>
+
+  <maintainer email="cesar-desktop@todo.todo">cesar-desktop</maintainer>
+
+  <license>TODO</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>joy</build_depend>
+  
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>joy</exec_depend>
+  <exec_depend>kobuki_safety_controller</exec_depend>
+  <exec_depend>yocs_velocity_smoother</exec_depend>
+  <exec_depend>turtlebot_bringup</exec_depend>
+</package>

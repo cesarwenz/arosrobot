@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Wheel macros -->
+  <xacro:macro name="wheel" params="prefix suffix reflect_side reflect_front">
+    <link name="${prefix}_${suffix}_wheel">
+      <visual>
+       <origin xyz="0 0 0" rpy="0 0 ${reflect_side*PI/2+PI}" />
+       <geometry>
+         <mesh filename="package://arosrobot_description/meshes/wheel.dae"/>
+       </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 ${reflect_side*0.04} 0" rpy="${PI/2} 0 0" />
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="${mass_wheel}" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="${ixx_wheel}" ixy="${ixy_wheel}" ixz="${ixz_wheel}" iyy="${iyy_wheel}" iyz="${iyz_wheel}" izz="${izz_wheel}"/>
+      </inertial>
+    </link>
+
+    <joint name="${prefix}_${suffix}_wheel_joint" type="continuous">
+      <axis xyz="0 1 0" rpy="0 0 0" />
+      <parent link="base_link"/>
+      <child link="${prefix}_${suffix}_wheel"/>
+      <origin xyz="${reflect_front*wheelbase} ${reflect_side*track} ${wheel_vertical_offset}" rpy="0 0 0"/>
+    </joint>
+
+    <!-- Gazebo xacro -->
+    <!-- Wheel parameters -->
+    <gazebo reference="${prefix}_${suffix}_wheel">
+      <mu1 value="3.0"/>
+      <mu2 value="0.4"/>
+      <kp value="100000000.0" />
+      <kd value="1.0" />
+      <fdir1 value="1 0 0"/>
+    </gazebo>
+
+    <transmission name="${prefix}_${suffix}_wheel_trans" type="SimpleTransmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="${prefix}_${suffix}_wheel_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="${prefix}_${suffix}_wheel_joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+
+  </xacro:macro>
+</robot>

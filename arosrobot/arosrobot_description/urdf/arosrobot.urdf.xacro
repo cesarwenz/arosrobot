@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<robot name="arosrobot" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find arosrobot_description)/urdf/azure_camera.urdf.xacro" />
+  <xacro:include filename="$(find arosrobot_description)/urdf/wheels.urdf.xacro" />
+  <xacro:include filename="$(find arosrobot_description)/urdf/imu.urdf.xacro" />
+  <xacro:include filename="$(find arosrobot_description)/urdf/lidar.urdf.xacro" />
+
+  <!-- Base Size -->
+  <xacro:property name="base_x_size" value="0.96520000" />
+  <xacro:property name="base_y_size" value="0.63500000" />
+  <xacro:property name="base_z_size" value="0.5754100" />
+
+  <!-- Platform Size -->
+  <xacro:property name="platform_x_size" value="0.100000" />
+  <xacro:property name="platform_y_size" value="0.100000" />
+  <xacro:property name="platform_z_size" value="1.4000000" />
+  
+  <!-- Wheel Mounting Positions -->
+  <xacro:property name="wheelbase" value="0.3080" />
+  <xacro:property name="track" value="0.33" />
+  <xacro:property name="wheel_vertical_offset" value="0.07" />
+
+  <!-- Wheel Properties -->
+  <xacro:property name="wheel_length" value="0.11430" />
+  <xacro:property name="wheel_radius" value="0.167" />
+
+  <!-- Base inertia properties -->
+  <xacro:property name="mass_base" value="49.7354" />
+  <xacro:property name="ixx_base" value="2.6820" />
+  <xacro:property name="ixy_base" value="0.5001" />
+  <xacro:property name="ixz_base" value="0.0135" />
+  <xacro:property name="iyy_base" value="4.3224" />
+  <xacro:property name="iyz_base" value="-0.0044" />
+  <xacro:property name="izz_base" value="4.3573" />
+
+  <!-- Platform inertia properties -->
+  <xacro:property name="mass_platform" value="10.9227" />
+  <xacro:property name="ixx_platform" value="7.8672" />
+  <xacro:property name="ixy_platform" value="0.5195" />
+  <xacro:property name="ixz_platform" value="0.0006" />
+  <xacro:property name="iyy_platform" value="0.3726" />
+  <xacro:property name="iyz_platform" value="0.0069" />
+  <xacro:property name="izz_platform" value="8.1169" />
+  
+  <!-- Wheel inertia properties -->
+  <xacro:property name="mass_wheel" value="4.3340" />
+  <xacro:property name="ixx_wheel" value="0.6036" />
+  <xacro:property name="ixy_wheel" value="0.1952" />
+  <xacro:property name="ixz_wheel" value="0.4462" />
+  <xacro:property name="iyy_wheel" value="0.9226" />
+  <xacro:property name="iyz_wheel" value="0.2116" />
+  <xacro:property name="izz_wheel" value="0.5513" />
+  
+  <xacro:arg name="robot_namespace" default="/" />
+  <xacro:property name="PI" value="3.14159"/>
+
+  <!-- Robot base -->
+  <link name="base_link">
+    <visual>
+      <origin rpy="0 0 ${PI}" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://arosrobot_description/meshes/base.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${base_z_size/2}" rpy="0 0 0" />
+      <geometry>
+        <box size="${base_x_size} ${base_y_size} ${base_z_size}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="inertial_link">
+    <inertial>
+      <mass value="${mass_base}" />
+      <origin xyz="-0.00065 -0.085 0.062" rpy="0 0 ${PI}"/>
+      <inertia ixx="${ixx_base}" ixy="${ixy_base}" ixz="${ixz_base}" iyy="${iyy_base}" iyz="${iyz_base}" izz="${izz_base}"/>
+    </inertial>
+  </link>
+
+  <joint name="inertial_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="inertial_link" />
+  </joint>
+
+  <!-- Sensor Platform -->  
+  <joint name="platform_to_base" type="fixed">
+    <parent link="base_link"/>
+    <child link="platform"/>
+    <origin rpy="0 0 0" xyz="-0.12 0.01 0.4"/>
+  </joint>
+  
+  <link name="platform">
+    <visual>
+      <origin rpy="0 0 ${PI}" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://arosrobot_description/meshes/platform.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${platform_x_size} ${platform_y_size} ${platform_z_size}"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0.18 0 ${(platform_z_size/2)}"/>
+    </collision>
+    <inertial>
+      <mass value="${mass_platform}" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="${ixx_platform}" ixy="${ixy_platform}" ixz="${ixz_platform}" iyy="${iyy_platform}" iyz="${iyz_platform}" izz="${izz_platform}"/>
+    </inertial>
+  </link>
+
+  <gazebo reference="platform">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <!-- Base footprint is on the ground under the robot -->
+  <link name="base_footprint"/>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <origin xyz="0 0 -0.1" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="base_footprint" />
+  </joint>
+  
+  <link name="gps_link"/>
+
+  <joint name="gps_joint" type="fixed">
+    <origin xyz="0.05 0.007 1.75" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="gps_link" />
+  </joint>
+  <!-- Wheel xacro -->
+  <xacro:wheel prefix="front" suffix="left" reflect_side="1" reflect_front="1"/>
+  <xacro:wheel prefix="rear" suffix="left" reflect_side="1" reflect_front="-1"/>
+  <xacro:wheel prefix="front" suffix="right" reflect_side="-1" reflect_front="1"/>
+  <xacro:wheel prefix="rear" suffix="right" reflect_side="-1" reflect_front="-1"/>
+  
+  <!-- add topic_kinect="kinect" for kinect camera -->
+
+  <xacro:rgbd_cameras topic_azure="azure" parent_link="base_link"/>
+  <xacro:imu_setup topic_imu_um7="um7/imu/data" topic_imu_azure="azure/imu/data" parent_link="base_link"/>
+  <xacro:lidar_setup topic_lidar_vlp16="vlp16/scan" topic_lidar_rplidar="/scan" parent_link="base_link"/>
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>$(arg robot_namespace)</robotNamespace>
+      <legacyModeNS>true</legacyModeNS>
+    </plugin>
+  </gazebo>
+
+  
+  <gazebo>
+    <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
+      <robotNamespace>$(arg robot_namespace)</robotNamespace>
+      <updateRate>10</updateRate>
+      <bodyName>base_link</bodyName>
+      <frameId>base_link</frameId>
+      <topicName>gps/fix</topicName>
+      <velocityTopicName>navsat/vel</velocityTopicName>
+      <referenceLatitude>42.86</referenceLatitude>
+      <referenceLongitude>-80.27</referenceLongitude>
+      <referenceHeading>0</referenceHeading>
+      <referenceAltitude>0</referenceAltitude>
+      <drift>0.0001 0.0001 0.0001</drift>
+    </plugin>
+  </gazebo>
+  
+
+</robot>
+
