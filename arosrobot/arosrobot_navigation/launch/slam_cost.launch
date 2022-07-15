@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  <!--- Run gmapping -->
+  <include file="$(find arosrobot_navigation)/launch/gmapping.launch">
+  </include>
+
+  <!--- Run Move Base -->
+  <include file="$(find arosrobot_navigation)/launch/move_base.launch" />
+
+</launch>

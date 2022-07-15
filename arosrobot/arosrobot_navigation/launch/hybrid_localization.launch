@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Run the map server -->
+  <arg name="map_file" default="$(find arosrobot_navigation)/maps/playpen.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+  </node>
+  <arg name="scan_topic" default="scan" />
+
+  <!--- Run AMCL -->
+  <include file="$(find arosrobot_navigation)/launch/amcl.launch">
+  </include>
+  <!--- Run Move Base -->
+  <include file="$(find arosrobot_navigation)/launch/move_base.launch" />
+
+  <!-- Start EKF for localization 
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
+    <rosparam command="load" file="$(find arosrobot_teleop)/config/localization.yaml" />
+  </node>
+-->
+  <rosparam command="load" file="$(find arosrobot_control)/config/amcl_localization.yaml" />
+
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom" clear_params="true"/>
+    <remap from="imu/data" to="um7/imu/data"/>
+
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true">
+    <remap from="odometry/filtered" to="odometry/filtered_map"/>
+    <remap from="imu/data" to="um7/imu/data"/>
+  </node>
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" clear_params="true">
+    <remap from="odometry/filtered" to="odometry/filtered_map"/>
+    <remap from="imu/data" to="um7/imu/data"/>
+  </node>
+
+</launch>

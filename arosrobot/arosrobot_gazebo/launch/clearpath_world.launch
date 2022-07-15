@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="model" default="$(find arosrobot_description)/urdf/arosrobot.urdf.xacro"/>  
+  <arg name="robot_namespace" default="/"/>
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" default="0.0"/>
+  <arg name="yaw" default="-1.57"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find husky_gazebo)/worlds/clearpath_playpen.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <!-- Spawn robot in gazebo -->
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
+  <node name="arosrobot_spawn" pkg="gazebo_ros" type="spawn_model"
+      args="-x $(arg x)
+            -y $(arg y)
+	    -z $(arg z)
+	    -Y $(arg yaw)
+            -unpause
+            -urdf
+            -param robot_description
+	    -model $(arg robot_namespace)"/>
+  <!-- Load controller configuration -->
+  <rosparam command="load" file="$(find arosrobot_control)/config/gazebo_control.yaml" />
+
+
+  <!-- Spawn controllers -->
+  <node name="base_controller_spawner" pkg="controller_manager" type="spawner"
+        args="arosrobot_joint_publisher arosrobot_velocity_controller"/>
+
+  <!-- Start EKF for localization -->
+  <include file="$(find arosrobot_control)/launch/local_localization.launch">
+  </include>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+</launch>

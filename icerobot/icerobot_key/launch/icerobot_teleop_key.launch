@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-  <node pkg="icerobot_key" type="icerobot_teleop_key" name="icerobot_teleop_keyboard"  output="screen">
-    <remap from="cmd_vel" to="icerobot_velocity_controller/cmd_vel"/>
-  </node>
-
-</launch>

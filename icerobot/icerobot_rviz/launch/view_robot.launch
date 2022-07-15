@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-  <arg name="model" default="$(find icerobot_description)/urdf/icerobot.urdf.xacro"/>
-  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
-
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find icerobot_rviz)/rviz/robot.rviz" output="screen"/>
-</launch>

@@ -1,0 +1,9 @@
+1.2.2
+--------------------------------------------------------------------------------
+2021-05-31, 15:33:22
+--------------------------------------------------------------------------------
+<class 'KeyboardInterrupt'>: 
+
+--------------------------------------------------------------------------------
+  File "/home/cesar-desktop/anaconda3/envs/openalea/lib/python3.8/site-packages/OpenAlea.PlantScan3D-1.2.2-py3.8.egg/openalea/plantscan3d/main_viewer.py", line 1378, in enterEvent
+    def enterEvent(self, event):

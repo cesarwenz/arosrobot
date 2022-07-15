@@ -1,0 +1,9 @@
+controllers:
+  - name: 'controller'
+    type: 'dwa_local_planner/DWAPlannerROS'
+controller:
+  holonomic_robot: false
+
+mbf_tolerance_check: true
+dist_tolerance: 0.2
+angle_tolerance: 1.5
